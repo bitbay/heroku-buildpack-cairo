@@ -78,7 +78,7 @@ src/freetype.tar.bz2:
 
 src/giflib.tar.bz2:
 	mkdir -p $$(dirname $@)
-	curl -sL "http://downloads.sourceforge.net/project/giflib/giflib-4.x/giflib-4.2.3.tar.bz2?r=http%3A%2F%2Fsourceforge.net%2Fprojects%2Fgiflib%2F&ts=1384049147&use_mirror=softlayer-dal2" -o $@
+	curl -sL "http://downloads.sourceforge.net/project/giflib/giflib-4.x/giflib-4.2.3.tar.bz2?r=&ts=1456669130&use_mirror=vorboss" -o $@
 
 src/harfbuzz.tar.bz2:
 	mkdir -p $$(dirname $@)
