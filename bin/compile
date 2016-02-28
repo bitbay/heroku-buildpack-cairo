@@ -32,7 +32,7 @@ function vendor() {
     # pkg-config should handle compiler options (if used)
     export PKG_CONFIG_PATH="$path/lib/pkgconfig:$PKG_CONFIG_PATH"
   fi
-
+  
   # standard paths
   export CPPPATH="$path/include:$CPPPATH"
   export CPATH="$path/include:$CPATH"
@@ -46,6 +46,19 @@ vendor "https://s3.amazonaws.com/mojodna-heroku/$STACK/cairo-1.14.2-1.tar.gz"  "
 vendor "https://s3.amazonaws.com/mojodna-heroku/$STACK/freetype-2.5.5-1.tar.gz" "$BUILD_DIR/vendor/freetype"
 vendor "https://s3.amazonaws.com/mojodna-heroku/$STACK/giflib-4.2.3-2.tar.gz"   "$BUILD_DIR/vendor/giflib"
 vendor "https://s3.amazonaws.com/mojodna-heroku/$STACK/pixman-0.32.6-2.tar.gz"  "$BUILD_DIR/vendor/pixman"
+
+echo "-----> Patching gif_lib"
+mkdir -p $BUILD_DIR/vendor/giflib/lib/pkgconfig
+cat <<EOF > $BUILD_DIR/vendor/giflib/lib/pkgconfig/giflib.pc
+prefix=/app/vendor/giflib
+exec_prefix=${prefix}
+libdir=${exec_prefix}/lib
+includedir=${prefix}/include
+PACKAGE=giflib
+EOF
+
+export PKG_CONFIG_PATH="$BUILD_DIR/vendor/giflib/lib/pkgconfig:$PKG_CONFIG_PATH"
+echo "-----> Patching gif_lib done."
 
 if [ $STACK == "cedar-14" ]; then
   vendor "https://s3.amazonaws.com/mojodna-heroku/$STACK/pango-1.36.8-1.tar.gz"  "$BUILD_DIR/vendor/pango"
